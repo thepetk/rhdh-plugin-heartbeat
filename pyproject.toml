@@ -1,0 +1,43 @@
+[project]
+name = "rhdh-plugin-heartbeat"
+version = "0.1.0"
+description = "Prometheus exporter that scrapes Red Hat Developer Hub for instance and plugin health metrics"
+readme = "README.md"
+license = { file = "LICENSE" }
+requires-python = ">=3.12"
+dependencies = [
+    "prometheus-client",
+    "httpx",
+    "structlog",
+    "pre-commit>=4.5.1",
+]
+
+[project.scripts]
+rhdh-plugin-heartbeat = "rhdh_plugin_heartbeat.__main__:main"
+
+[dependency-groups]
+dev = [
+    "pytest",
+    "pytest-asyncio",
+    "pytest-cov",
+    "respx",
+    "ruff",
+    "ty",
+]
+
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[tool.hatch.build.targets.wheel]
+packages = ["src/rhdh_plugin_heartbeat"]
+
+[tool.pytest.ini_options]
+asyncio_mode = "auto"
+testpaths = ["tests"]
+
+[tool.ruff]
+src = ["src"]
+
+[tool.ruff.lint]
+select = ["E", "F", "I", "UP"]
